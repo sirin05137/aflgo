@@ -16,6 +16,7 @@ Let's get started with building AFLGo (on Ubuntu 20.04) and fuzz the target libx
 ```bash
 git clone https://github.com/aflgo/aflgo.git
 cd aflgo
+git submodule update --init --recursive
 export AFLGO=$PWD
 
 # Build AFLGo
@@ -29,6 +30,30 @@ cd examples
 ./libxml2-ef709ce2.sh
 ```
 See the detailed steps discussed below.
+
+# Fuzzing the spike
+Let's fuzz the target spike (or custom spike). To fuzz the spike, `$RISCV` must point to the RISCV toolchain and `$RISCV/bin` must be added to `$PATH`.
+```bash
+cd RTL
+
+# If the RISCV toolchain is not installed :
+sudo apt-get install -y autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev
+git clone https://github.com/riscv/riscv-gnu-toolchain.git
+cd riscv-gnu-toolchain
+git checkout 2021.04.23
+./configure --prefix=/opt/riscv
+sudo make -j4
+export PATH=/opt/riscv/bin:$PATH
+export RISCV=/opt/riscv
+cd ..
+
+# Build riscv-fesvr, riscv-tests
+./run.sh
+
+# Fuzzing custom spike
+cd targets
+./spike-custom.sh
+```
 
 # Integration into OSS-Fuzz
 The easiest way to use AFLGo is as patch testing tool in OSS-Fuzz. Here is our integration:
