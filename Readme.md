@@ -14,7 +14,7 @@ AFLGo is based on <a href="http://lcamtuf.coredump.cx/afl/" target="_blank">AFL<
 # Getting Started
 Let's get started with building AFLGo (on Ubuntu 20.04) and fuzz the target libxml2:
 ```bash
-git clone https://github.com/aflgo/aflgo.git
+git clone https://github.com/sirin05137/aflgo.git
 cd aflgo
 git submodule update --init --recursive
 export AFLGO=$PWD
@@ -31,7 +31,7 @@ cd examples
 ```
 See the detailed steps discussed below.
 
-# Fuzzing the spike
+# Fuzzing the Spike
 Let's fuzz the target spike (or custom spike). To fuzz the spike, `$RISCV` must point to the RISCV toolchain and `$RISCV/bin` must be added to `$PATH`.
 ```bash
 cd RTL
@@ -51,6 +51,7 @@ cd ..
 ./run.sh
 
 # Fuzzing custom spike
+sudo apt-get install device-tree-compiler libboost-regex-dev libboost-system-dev
 cd targets
 ./spike-custom.sh
 ```
